@@ -1,23 +1,26 @@
 <html>
     <head>
         <title>
-            login
+            
         </title>
-       
-        <%- style %>
-
+        <link rel="stylesheet" href="/css/layout.css">
         <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/footer.css">
 
+        <%- style %>
+        
     </head>
 
     <body>
+        <%- include('_header'); %>
+        
+        <main id="layout-main">
+            <%- body %>
 
-    
+        </main>
 
-        <%- body  %>
 
-    
+        <%- include('_footer'); %>
 
         <%- script %>
         

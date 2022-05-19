@@ -1,17 +1,25 @@
-<html>
-    <head>
-        <title>
-            <%= title %>
-        </title>
-        <link rel="stylesheet" href="/css/layout.css">
-    </head>
 
-    <body>
+<h1>
+    Codeial / <%= title %>
+</h1>
 
-        <%- include('_header')%>
 
-        <h1>Codeial / <%= title %> </h1>
+<section id="feed-posts">
+    <h4>Posts</h4>
+    <form action="/post/create-post" id="new-post-form" method="POST">
+        <textarea name="content" cols="30" rows="3" placeholder="Type Here..."></textarea>
+        <input type="submit" value="Post">
+    </form>
 
-        
-    </body>
-</html>
+    <% if(locals.posts){ %>
+        <h3>Post section of &nbsp; "<%= user.name %>"</h3>
+    <ul id="post-list-container">
+            <% for( i of posts) {%>
+                <li> <%= i.content%></li>
+                <small><%= i.user.name %></small>
+            <% }%>
+    </ul>
+
+    <% }%>
+
+</section>
