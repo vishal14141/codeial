@@ -12,7 +12,7 @@ router.post('/create-session',passport.authenticate(
 
 router.get('/login',passport.shouldRenderNext, usersController.login);
 router.get('/register',passport.shouldRenderNext, usersController.register);
-router.post('/createUser', usersController.createUser);
+router.post('/createUser',passport.checkAuthentication, usersController.createUser);
 
 
 router.get('/sign-out', usersController.destroySession);

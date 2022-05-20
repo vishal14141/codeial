@@ -4,10 +4,11 @@ const passport = require('passport');
 const router = express.Router();
 
 const postController = require('../controllers/posts_controller');
+const commentController = require('../controllers/comments_controller');
 
-router.get('/upload', postController.upload);
-router.get('/delete', postController.delete);
+
 router.post('/create-post', passport.checkAuthentication,postController.createPost);
+router.post('/add-comment', passport.checkAuthentication, commentController.addComment);
 
 module.exports = router;
 
