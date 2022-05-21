@@ -23,7 +23,4 @@ module.exports.addComment = function(req,res){
             })
         }
     });
-
-    
-
 }

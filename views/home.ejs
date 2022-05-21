@@ -16,6 +16,13 @@
         <h3>Post section of &nbsp; "<%= user.name %>"</h3>
     <ul id="post-list-container">
             <% for( post of posts) {%>
+
+                <% if(locals.user.id == post.user.id){ %>
+                <small>
+                    <a href="post/destroy/<%= post.id%>">Delete Post</a>
+                </small>
+                <% } %>
+
                 <li> <%= post.content%></li>
                 <div>
                     <h3>Previous comments are:</h3>
