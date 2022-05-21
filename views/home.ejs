@@ -29,10 +29,15 @@
                     <ul>
                         <% for( comment of post.comments) {%>
                             <li> <%= comment.content %></li>
+                            <% if(locals.user.id == comment.user.id || post.user.id == locals.user.id){ %>
+                            <small>
+                                <a href="comment/destroy/<%= comment.id%>">Delete Comment</a>
+                            </small>
+                            <%}%>
                         <% } %>
                     </ul>
                 </div>
-                <small><form action="/post/add-comment" id="new-post-form" method="POST">
+                <small><form action="/comment/add-comment" id="new-post-form" method="POST">
                     <textarea name="content" cols="30" rows="3" placeholder="Type Comment Here..." required></textarea>
                     <input type="hidden" name="post" value="<%= post._id %>">
                     <input type="submit" value="Post">
