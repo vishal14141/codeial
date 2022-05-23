@@ -1,0 +1,15 @@
+<% if(locals.user.id == post.user.id){ %>
+    <small>
+        <a href="post/destroy/<%= post.id%>">Delete Post</a>
+    </small>
+    <% } %>
+
+    <li> <%= post.content%></li>
+    
+    <%- include('_comment')%>
+
+    <small><form action="/comment/add-comment" id="new-post-form" method="POST">
+        <textarea name="content" cols="30" rows="3" placeholder="Type Comment Here..." required></textarea>
+        <input type="hidden" name="post" value="<%= post._id %>">
+        <input type="submit" value="Post">
+    </form></small>

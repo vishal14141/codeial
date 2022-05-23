@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const usersController = require('../controllers/users_controller');
 
-router.get('/profile',passport.checkAuthentication,usersController.profile);
+router.get('/profile/:id',passport.checkAuthentication,usersController.profile);
 
 router.post('/create-session',passport.authenticate(
     'local',
@@ -13,6 +13,7 @@ router.post('/create-session',passport.authenticate(
 router.get('/login',passport.shouldRenderNext, usersController.login);
 router.get('/register',passport.shouldRenderNext, usersController.register);
 router.post('/createUser',passport.checkAuthentication, usersController.createUser);
+router.post('/update/:id', passport.checkAuthentication, usersController.updateProfile);
 
 
 router.get('/sign-out', usersController.destroySession);
