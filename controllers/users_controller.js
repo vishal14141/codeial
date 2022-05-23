@@ -12,12 +12,12 @@ module.exports.profile = function (req, res) {
 
 module.exports.updateProfile = function (req, res) {
     if (req.user.id == req.params.id) {
-        User.findByIdAndUpdate(req.params.id, req.body, function(err,user){
+        User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
             console.log(`Updated User: ${user}`)
             return res.redirect('/');
         })
     }
-    else{
+    else {
         return res.status(401).send('UnAuthorized');
     }
 }
@@ -30,31 +30,28 @@ module.exports.register = function (req, res) {
     res.render('signup');
 }
 
-module.exports.createUser = function (req, res) {
-    if (req.body.password != req.body.confirmPassword) {
-        console.log("Password is not matching");
-        return res.redirect('back');
-    }
-
-    User.findOne({ email: req.body.email }, function (err, user) {
-        if (err) {
-            console.log("Error in finding user in signing up"); return;
+module.exports.createUser = async function (req, res) {
+    try {
+        if (req.body.password != req.body.confirmPassword) {
+            console.log("Password is not matching");
+            return res.redirect('back');
         }
+
+        let user = await User.findOne({ email: req.body.email });
 
         if (!user) {
             console.log("On the path to create new user");
-            User.create(req.body, function (err, user) {
-                if (err) { console.log("Error in saving the user"); return; }
-
-                console.log(`Stored user is: ${user}`);
-                return res.redirect('/users/login');
-            })
-        }
-        else {
+            let user = await User.create(req.body);
+            console.log(`Created user id : ${user}`);
             return res.redirect('/users/login');
         }
-
-    })
+        else {
+            console.log('User is already there');
+            return res.redirect('/users/login');
+        }
+    } catch (error) {
+        console.log(`Error is : ${error}`);
+    }
 }
 
 //Sign in and create a session for the user

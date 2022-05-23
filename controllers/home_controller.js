@@ -1,55 +1,38 @@
 const Post = require("../models/post");
 const User = require('../models/user');
 
-module.exports.home = function(req,res){
-    if(req.user){
-    // Post.find({user:req.user._id}, function(err,posts){
-    //     if(err){
-    //         console.log("Error in finding posts");
-    //         return;
-    //     }
+module.exports.home = async function (req, res) {
+    if (req.user) {
+        
+        try {
 
-    //     return res.render('home', {
-    //         title : 'Home',
-    //         posts: posts
-    //     });
+            let posts = await Post.find({}).populate('user')
+                .populate({
+                    path: 'comments',
+                    populate: {
+                        path: 'user',
+                    }
+                });
 
-    // })
-
-    // Post.find({user:req.user._id}).populate('user').exec(function(err, posts){
-
-    //     for(post of posts){
-    //         post.comments
-    //     }
-
-    //     return res.render('home', {
-    //         title : 'Home',
-    //         posts: posts
-    //     });
-    // })
-    Post.find({}).populate('user')
-    .populate({
-        path: 'comments',
-        populate: {
-            path: 'user',
-        }
-    }).exec(function(err,posts){
-
-        User.find({}, function(err, users){
+            let users = await User.find({});
 
             return res.render('home', {
-                title : 'Home',
+                title: 'Home',
                 posts: posts,
                 all_users: users
             });
-        })
-    })
-  }
 
-  else{
-      return res.render('home',{
-          title:"Home"
-      })
-  }
+        } catch (error) {
+            console.log(`Error is: ${error}`);
+            return;
+        }
+
+    }
+
+    else {
+        return res.render('home', {
+            title: "Home"
+        })
+    }
 
 }
