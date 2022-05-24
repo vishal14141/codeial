@@ -9,8 +9,10 @@ module.exports.createPost = async function (req, res) {
         });
 
         console.log(`Create post is : ${post}`);
+        req.flash('success', 'Post created Successfully');
         return res.redirect('/');
     } catch (error) {
+        req.flash('error', err);
         console.log(`Error is : ${error}`);
     }
 
@@ -25,6 +27,7 @@ module.exports.destroy =async function (req, res) {
             post.remove();
 
             await Comment.deleteMany({ post: req.param.id }, function (err) {
+                req.flash('success', 'Post deleted Successfully');
                 return res.redirect('/');
             })
         }
