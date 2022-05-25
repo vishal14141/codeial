@@ -8,6 +8,16 @@ module.exports.createPost = async function (req, res) {
             user: req.user._id
         });
 
+        if(req.xhr){
+            console.log("Hello");
+            return res.status(200).json({
+               data: {
+                   post: post,
+               } ,
+               message : "post Created!"
+            });
+        }
+
         console.log(`Create post is : ${post}`);
         req.flash('success', 'Post created Successfully');
         return res.redirect('/');

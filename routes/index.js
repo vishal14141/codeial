@@ -8,8 +8,8 @@ router.get('/',homeController.home);
 //If any request comes with users , it will require ./users
 router.use('/users', require('./users'));
 
-router.use('/post', require('./posts'));
-router.use('/comment', require('./comments'));
+router.use('/posts', require('./posts'));
+router.use('/comments', require('./comments'));
 
 //For ant other routes
 //router.use('/routerName', require('routerFile));

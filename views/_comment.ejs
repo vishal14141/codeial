@@ -1,13 +1,15 @@
-<div>
-    <h3>Previous comments are:</h3>
-    <ul>
-        <% for( comment of post.comments) {%>
-            <li> <%= comment.content %></li>
-            <% if(locals.user.id == comment.user.id || post.user.id == locals.user.id){ %>
-            <small>
-                <a href="comment/destroy/<%= comment.id%>">Delete Comment</a>
-            </small>
-            <%}%>
+<li>
+    <p>
+        <% if (locals.user && locals.user.id == comment.user.id){ %>
+        <small>
+            <a href="/comments/destroy/<%= comment.id %>">X</a>
+        </small>
         <% } %>
-    </ul>
-</div>
+        <%= comment.content %>
+        <br>
+        <small>
+            <%= comment.user.name %>
+        </small>
+    </p>    
+
+</li>

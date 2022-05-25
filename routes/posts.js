@@ -7,7 +7,7 @@ const postController = require('../controllers/posts_controller');
 const commentController = require('../controllers/comments_controller');
 
 
-router.post('/create-post', passport.checkAuthentication,postController.createPost);
+router.post('/create', passport.checkAuthentication,postController.createPost);
 router.get('/destroy/:id', passport.checkAuthentication, postController.destroy);
 
 
