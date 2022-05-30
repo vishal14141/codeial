@@ -36,10 +36,20 @@ module.exports.destroy =async function (req, res) {
         if (post.user == req.user.id) {
             post.remove();
 
-            await Comment.deleteMany({ post: req.param.id }, function (err) {
-                req.flash('success', 'Post deleted Successfully');
-                return res.redirect('/');
-            })
+            await Comment.deleteMany({ post: req.param.id });
+            
+            if(req.xhr){
+                return res.status(200).json({
+                    data: {
+                        post_id: req.params.id
+                    },
+                    message: "Post deleted successfully"
+                })
+            }
+
+            req.flash('success', 'Post deleted Successfully');
+            return res.redirect('/');
+        
         }
         // .id means converting the object id into string 
         else {
