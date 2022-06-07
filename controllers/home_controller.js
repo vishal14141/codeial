@@ -1,40 +1,43 @@
-const Post = require("../models/post");
+const Post = require('../models/post');
 const User = require('../models/user');
 
-module.exports.home = async function (req, res) {
-    if (req.user) {
-        
-        try {
 
-            let posts = await Post.find({})
-                .sort('-createdAt')
-                .populate('user')
-                .populate({
-                    path: 'comments',
-                    populate: {
-                        path: 'user',
-                    }
-                });
 
-            let users = await User.find({});
+module.exports.home = async function(req, res){
 
-            return res.render('home', {
-                title: 'Home',
-                posts: posts,
-                all_users: users
-            });
+    try{
+         // populate the user of each post
+        let posts = await Post.find({})
+        .sort('-createdAt')
+        .populate('user')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user'
+            }
+        });
+    
+        let users = await User.find({});
 
-        } catch (error) {
-            console.log(`Error is: ${error}`);
-            return;
-        }
-
-    }
-
-    else {
         return res.render('home', {
-            title: "Home"
-        })
-    }
+            title: "Codeial | Home",
+            posts:  posts,
+            all_users: users
+        });
 
+    }catch(err){
+        console.log('Error', err);
+        return;
+    }
+   
 }
+
+// module.exports.actionName = function(req, res){}
+
+
+// using then
+// Post.find({}).populate('comments').then(function());
+
+// let posts = Post.find({}).populate('comments').exec();
+
+// posts.then()
